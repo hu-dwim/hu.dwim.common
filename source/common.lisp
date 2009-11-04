@@ -13,8 +13,9 @@
               (funcall filter symbol))
       ;; do take care of the symbol nil: (list nil)!
       (let ((symbol (or symbol (list nil))))
-        (import symbol target-package)
-        (export symbol target-package)))))
+        (ignore-errors
+          (import symbol target-package)
+          (export symbol target-package))))))
 
 (defun export-external-symbols-of-used-packages (package &key filter)
   (dolist (used-package (package-use-list (find-package package)))

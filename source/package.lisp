@@ -14,5 +14,12 @@
         :iterate
         :metabang-bind)
 
+  (:shadowing-import-from :closer-mop
+                          #:standard-generic-function
+                          #:defgeneric
+                          #:ensure-generic-function
+                          #:remove-method
+                          #:find-method)
+
   (:export #:export-external-symbols
            #:export-external-symbols-of-used-packages))
