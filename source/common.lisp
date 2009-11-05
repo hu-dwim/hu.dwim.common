@@ -6,15 +6,26 @@
 
 (in-package :hu.dwim.common)
 
-(defun export-external-symbols (source-package target-package &key filter)
+(defun export-external-symbols (source-package target-package &key filter (if-exists :ignore))
+  (check-type if-exists (member :error :warn :ignore))
   (setf target-package (find-package target-package))
   (do-external-symbols (symbol source-package)
     (when (or (not filter)
               (funcall filter symbol))
       ;; do take care of the symbol nil: (list nil)!
-      (let ((symbol (or symbol (list nil))))
-        (ignore-errors
-          (import symbol target-package)
+      (block importing-one-symbol
+        (let ((symbol (or symbol (list nil))))
+          (when (and (symbolp symbol)
+                     (find-symbol (symbol-name symbol) target-package))
+            (ecase if-exists
+              (:error
+               ;; let the IMPORT call below signal an error for us with some useful restarts
+               (import symbol target-package))
+              (:warn
+               (warn 'simple-style-warning "Symbol ~S already exists in package ~A. Using ~S, the already present one."
+                     symbol target-package (find-symbol (symbol-name symbol) target-package))
+               (import symbol target-package))
+              (:ignore )))
           (export symbol target-package))))))
 
 (defun export-external-symbols-of-used-packages (package &key filter)
