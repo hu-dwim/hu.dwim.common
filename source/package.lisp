@@ -15,11 +15,13 @@
         :metabang-bind)
 
   (:shadowing-import-from :closer-mop
-                          #:standard-generic-function
                           #:defgeneric
+                          #:defmethod
                           #:ensure-generic-function
+                          #:find-method
                           #:remove-method
-                          #:find-method)
+                          #:standard-class
+                          #:standard-generic-function)
 
   (:export #:export-external-symbols
            #:export-external-symbols-of-used-packages))
