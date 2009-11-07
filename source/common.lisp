@@ -14,18 +14,20 @@
               (funcall filter symbol))
       ;; do take care of the symbol nil: (list nil)!
       (block importing-one-symbol
-        (let ((symbol (or symbol (list nil))))
-          (when (and (symbolp symbol)
-                     (find-symbol (symbol-name symbol) target-package))
+        (let* ((symbol (or symbol (list nil)))
+               (cursym (if (symbolp symbol)
+                           (find-symbol (symbol-name symbol) target-package))))
+          (when (and cursym (not (eq symbol cursym)))
             (ecase if-exists
               (:error
                ;; let the IMPORT call below signal an error for us with some useful restarts
                (import symbol target-package))
               (:warn
                (warn 'simple-style-warning "Symbol ~S already exists in package ~A. Using ~S, the already present one."
-                     symbol target-package (find-symbol (symbol-name symbol) target-package))
-               (import symbol target-package))
-              (:ignore )))
+                     symbol target-package cursym)
+               (setf symbol cursym))
+              (:ignore
+               (setf symbol cursym))))
           (export symbol target-package))))))
 
 (defun export-external-symbols-of-used-packages (package &key filter)

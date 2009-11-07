@@ -21,6 +21,7 @@
                           #:find-method
                           #:remove-method
                           #:standard-class
+                          #:standard-method
                           #:standard-generic-function)
 
   (:export #:export-external-symbols
