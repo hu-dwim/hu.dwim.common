@@ -10,10 +10,6 @@
 
 (defsystem :hu.dwim.common
   :class hu.dwim.system
-  :author ("Attila Lendvai <attila.lendvai@gmail.com>"
-           "Levente Mészáros <levente.meszaros@gmail.com>"
-           "Tamás Borbély <tomi.borbely@gmail.com>")
-  :licence "BSD / Public domain"
   :description "An extended Common Lisp package to the general needs of other hu.dwim systems."
   :depends-on (:alexandria
                :anaphora
