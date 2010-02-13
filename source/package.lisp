@@ -14,6 +14,8 @@
         :iterate
         :metabang-bind)
 
+  (:shadow #:in-package)
+
   (:shadowing-import-from :closer-mop
                           #:defgeneric
                           #:defmethod
@@ -24,5 +26,10 @@
                           #:standard-method
                           #:standard-generic-function)
 
-  (:export #:export-external-symbols
+  (:export #:in-package
+           #:export-external-symbols
            #:export-external-symbols-of-used-packages))
+
+(defmacro hu.dwim.common:in-package (name)
+  ;; this is a placeholder macro that will be redefined when hu.dwim.def is also loaded
+  `(common-lisp:in-package ,name))
