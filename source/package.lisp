@@ -13,9 +13,7 @@
         :hu.dwim.common-lisp
         :iterate
         :metabang-bind)
-
   (:shadow #:in-package)
-
   (:shadowing-import-from :closer-mop
                           #:defgeneric
                           #:defmethod
@@ -25,7 +23,6 @@
                           #:standard-class
                           #:standard-method
                           #:standard-generic-function)
-
   (:export #:in-package
            #:export-external-symbols
            #:export-external-symbols-of-used-packages))
