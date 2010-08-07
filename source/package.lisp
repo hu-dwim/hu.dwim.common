@@ -25,7 +25,8 @@
                           #:standard-generic-function)
   (:export #:in-package
            #:export-external-symbols
-           #:export-external-symbols-of-used-packages))
+           #:export-external-symbols-of-used-packages
+           #:import-all-owned-symbols))
 
 (defmacro hu.dwim.common:in-package (name)
   ;; this is a placeholder macro that will be redefined when hu.dwim.def is also loaded
