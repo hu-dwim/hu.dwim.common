@@ -6,6 +6,17 @@
 
 (in-package :hu.dwim.common)
 
+(defmacro dolist ((iterator list &optional return-value) &body body)
+  "Like DOLIST except when ITERATOR is a cons, in which case it DESTRUCTURING-BIND's the elements of LIST to it."
+  (if (listp iterator)
+      (let ((i (gensym "DOLIST-I-")))
+        `(common-lisp:dolist (,i ,list ,return-value)
+           (destructuring-bind ,iterator ,i
+             ,@body)))
+      `(common-lisp:dolist (,iterator ,list ,return-value)
+         (let ((,iterator ,iterator))
+           ,@body))))
+
 (defun export-external-symbols (source-package target-package &key filter (if-exists :ignore))
   (check-type if-exists (member :error :warn :ignore))
   (setf target-package (find-package target-package))
