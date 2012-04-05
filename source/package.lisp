@@ -14,7 +14,8 @@
         :iterate
         :metabang-bind)
   (:shadow #:dolist
-           #:in-package)
+           #:in-package
+           #:sum)
   (:shadowing-import-from :closer-mop
                           #:defgeneric
                           #:defmethod
